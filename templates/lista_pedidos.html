@@ -1,0 +1,18 @@
+{% extends "base.html" %} 
+{% block head_title %} <title>Lista Pedidos</title> {% endblock head_title %} 
+{% block contiene_section %}
+      <title>Lista de Pedidos</title>
+</head>
+<body>
+    <h1>Lista de Pedidos</h1>
+
+    <ul>
+        {% for pedido in pedidos %}
+            <li>
+                <a href="{% url 'detalle_pedido' pedido.id %}">Pedido #{{ pedido.id }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock contiene_section %}
+
+

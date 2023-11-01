@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block head_title %} <title>Crear Producto</title> {% endblock head_title%}
+{% block main_h2 %} <h2>Crear un nuevo producto</h2> {% endblock main_h2 %}
+{% block contiene_section %}
+    <h3 align='center'>Producto:</h3>
+    <form align='center' method="post" action="">
+    {% csrf_token %}
+    {{formulaire}}
+    <input type='submit' value='Crear'><br>
+      
+    </form>
+
+    <h5><i><b> Gracias por utilizar nuestro servicio</b></i></h5>
+{% endblock contiene_section %}

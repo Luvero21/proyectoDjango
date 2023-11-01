@@ -1,0 +1,38 @@
+[
+  {
+    "model": "Cliente",
+    "pk": 1,
+    "fields": {
+      "nombre": "Gustavo",
+      "direccion": "san juan 88",
+      "telefono": "123456789",
+      "email": "cliente@gmail.com"
+    }
+  },
+  {
+    "model": "Producto",
+    "pk": 1,
+    "fields": {
+      "nombre": "Hamburguesa",
+      "descripcion": "Descripción de la hamburguesa",
+      "precio": 2999.99
+    }
+  },
+  {
+    "model": "Producto",
+    "pk": 2,
+    "fields": {
+      "nombre": "Papas Fritas",
+      "descripcion": "Descripción de las papas fritas",
+      "precio": 3999.99
+    }
+  },
+  {
+    "model": "Pedido",
+    "pk": 1,
+    "fields": {
+      "cliente": 1,
+      "total": 6999.98
+    }
+  }
+]

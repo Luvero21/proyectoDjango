@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+{% block head_title %} <title> Lista Clientes </title> {% endblock head_title %} 
+{% block contiene_section %}
+<form action="">
+<input type="text" name="nombre" placeholder="Buscar Cliente">
+<input type="submit" value="Buscar"> 
+</form>
+    <h1>Lista de Clientes</h1>
+
+    <ul>
+        {% for cliente in clientes %}
+            <li>
+                <a href="{% url 'detalle_cliente' cliente.id %}">{{ cliente.nombre }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock contiene_section %}

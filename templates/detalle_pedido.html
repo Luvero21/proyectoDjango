@@ -1,0 +1,24 @@
+{% extends 'base.html'%}
+{% block head_title %} <title>Detalle Pedido</title> {% endblock head_title %} 
+{% block contiene_section %}
+    <h1>Detalle del Pedido</h1>
+    <p>Número de Pedido: {{ pedido.id }}</p>
+    <p>Fecha del Pedido: {{ pedido.fecha_pedido }}</p>
+    <p>Total del Pedido: ${{ pedido.total }}</p>
+    
+    <h2>Productos del Pedido:</h2>
+    <ul>
+        {% for item in pedido.itempedido_set.all %}
+            <li>{{ item.producto.nombre }} (Cantidad: {{ item.cantidad }}, Subtotal: ${{ item.subtotal }})</li>
+        {% endfor %}
+    </ul>
+{% endblock contiene_section %}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block head_title %} <title>Confirmación de Registro</title> {% endblock head_title%}
+{% block main_h2 %} <h2>Confirmación de Registro</h2> {% endblock main_h2 %}
+{% block contiene_section %}
+    <h3>Últimos Clientes Registrados:</h3>
+    <ul>
+        {% for cliente in ultimos_clientes %}
+            <li>Nombre: {{ cliente.nombre }}</li>
+            <li>Dirección: {{ cliente.direccion }}</li>
+            <li>Teléfono: {{ cliente.telefono }}</li>
+            <li>Email: {{ cliente.email }}</li><br>
+        {% endfor %}
+    </ul><br>
+
+    <h5><i><b> Gracias por utilizar nuestro servicio</b></i></h5>
+{% endblock contiene_section %}
