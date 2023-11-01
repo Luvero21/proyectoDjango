@@ -8,13 +8,75 @@ from inicio.formulaire import formulaireProducto
 
 
 def inicio(request):
-    #version1
-    #template=loader.get_template('inicio.html')
-    #template_renderizado= template.render({})
-
-    #return HttpResponse(template_renderizado)
-    #version2
+    
     return render(request,'inicio.html',{})
+
+#Vista para crear un cliente
+def formulario_cliente(request):
+
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('confirmacion_registro')
+    form= ClienteForm()
+
+    return render(request, 'formulario_cliente.html',{'form':form})
+
+
+#Vista Crear Producto
+def crearProducto(request):
+    if request.method =='POST':
+        formulaire=formulaireProducto(request.POST)
+        if formulaire.is_valid():
+            info_clean= formulaire.cleaned_data
+            
+            nombre= info_clean.get('nombre')
+            descripcion= info_clean.get('descripcion')
+            precio= info_clean.get('precio')
+            imagen=info_clean.get('imagen')
+            
+            producto=Producto(nombre=nombre,descripcion=descripcion,precio=precio,imagen=imagen)
+            producto.save()
+            
+            return redirect('lista_productos')
+        else:
+            return render(request,'crear_producto.html',{'':formulaire})
+            
+    formulaire=formulaireProducto()
+    return render(request,'crear_producto.html',{'formulaire':formulaire})
+
+#Vista para crear un usuario
+def formulario(request):
+    mensaje=''
+    context={}
+    if request.method == 'POST':
+        form = UsuarioForm(request.POST)
+        if form.is_valid():
+            form.save()
+            mensaje='¡Gracias por registrarse!'
+           
+
+    context['form'] = UsuarioForm()
+    context['mensaje']=mensaje
+    
+    return render(request, 'formulario.html', context)
+def confirmacion_registro(request):
+    if request.method == 'POST':
+        # Aquí se procesa el formulario y se guarda en la base de datos
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            # Redirige a la página de confirmación
+            return redirect('confirmacion_registro')
+    else:
+        # Si no se ha enviado el formulario, muestra la página de confirmación
+        form = ClienteForm()
+
+    # Recupera los últimos clientes registrados
+    ultimos_clientes = Cliente.objects.order_by('-id')[:1]
+
+    return render(request, 'confirmacion_registro.html', {'ultimos_clientes': ultimos_clientes, 'form': form})
 
 def lista_productos(request):
     nombre_a_buscar=request.GET.get('nombre')
@@ -63,50 +125,10 @@ def agregarcliente(request):
     return render(request, 'agregar_cliente.html', {'form': form})
 
     
-def confirmacion_registro(request):
-    if request.method == 'POST':
-        # Aquí se procesa el formulario y se guarda en la base de datos
-        form = ClienteForm(request.POST)
-        if form.is_valid():
-            form.save()
-            # Redirige a la página de confirmación
-            return redirect('confirmacion_registro')
-    else:
-        # Si no se ha enviado el formulario, muestra la página de confirmación
-        form = ClienteForm()
 
-    # Recupera los últimos clientes registrados
-    ultimos_clientes = Cliente.objects.order_by('-id')[:1]
 
-    return render(request, 'confirmacion_registro.html', {'ultimos_clientes': ultimos_clientes, 'form': form})
-
-def formulario_cliente(request):
-
-    if request.method == 'POST':
-        form = ClienteForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('confirmacion_registro')
-    form= ClienteForm()
 
     
-    return render(request, 'formulario_cliente.html',{'form':form})
-
-    
-def formulario(request):
-    mensaje=''
-    context={}
-    if request.method == 'POST':
-        form = UsuarioForm(request.POST)
-        if form.is_valid():
-            form.save()
-            mensaje='¡Gracias por registrarse!'
-           
-
-    context['form'] = UsuarioForm()
-    context['mensaje']=mensaje
-    
-    return render(request, 'formulario.html', context)
 
 
 def ingresarUsuario(request):
@@ -119,26 +141,7 @@ def ingresarUsuario(request):
         form=UsuIngForm()
     return render(request, 'ingresar_usuario.html', {'form':form} )
 
-def crearProducto(request):
-    if request.method =='POST':
-        formulaire=formulaireProducto(request.POST)
-        if formulaire.is_valid():
-            info_clean= formulaire.cleaned_data
-            
-            nombre= info_clean.get('nombre')
-            descripcion= info_clean.get('descripcion')
-            precio= info_clean.get('precio')
-            imagen=info_clean.get('imagen')
-            
-            producto=Producto(nombre=nombre,descripcion=descripcion,precio=precio,imagen=imagen)
-            producto.save()
-            
-            return redirect('lista_productos')
-        else:
-            return render(request,'crear_producto.html',{'':formulaire})
-            
-    formulaire=formulaireProducto()
-    return render(request,'crear_producto.html',{'formulaire':formulaire})
+
 
     
     
